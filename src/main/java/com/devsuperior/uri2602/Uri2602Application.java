@@ -17,19 +17,29 @@ public class Uri2602Application implements CommandLineRunner {
 
 	@Autowired
 	private CustomerRepository repository;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(Uri2602Application.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+
 		List<CustomerMinProjection> list = repository.list("RS");
-		List<CustomerMinDTO> o = list.stream().map(x-> new CustomerMinDTO(x)).collect(Collectors.toList());
-		for(CustomerMinDTO obj : o) {
+		List<CustomerMinDTO> result = list.stream().map(x -> new CustomerMinDTO(x)).collect(Collectors.toList());
+
+		System.out.print("\n***Resultado SQL Raíz:\n");
+		for (CustomerMinDTO obj : result) {
 			System.out.print(obj + "\n");
 		}
+
+		System.out.print("\n\n ");
+
+		List<CustomerMinDTO>result1 = repository.list1("RS");
+		System.out.print("\n***Resultado JPQL:\n");
+		for (CustomerMinDTO obj : result1) {
+			System.out.print(obj + "\n");
 		}
-		
-	
+
+	}
 }
